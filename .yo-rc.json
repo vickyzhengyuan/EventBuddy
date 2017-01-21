@@ -1,0 +1,60 @@
+{
+  "generator-lab-microservices": {
+    "location": "sg",
+    "name": "sg-uService-event-buddy-web-server",
+    "persistence": true,
+    "apiMount": "/api",
+    "type": "lab-microservice",
+    "authModule": true,
+    "capabalities": [
+      "Persistence"
+    ],
+    "endPoints": [
+      {
+        "url": "/health-check",
+        "method": "GET",
+        "description": "Check microservice status. Should return 200/OK",
+        "secure": "No"
+      },
+      {
+        "url": "/auth/login",
+        "method": "POST",
+        "description": "Authenticates a user into microservice",
+        "secure": "No"
+      },
+      {
+        "url": "/users/:userId",
+        "method": "GET",
+        "description": "Retrieves a user",
+        "secure": "Yes"
+      },
+      {
+        "url": "/users",
+        "method": "GET",
+        "description": "Retrieves all user",
+        "secure": "Yes"
+      },
+      {
+        "url": "/users/:userId",
+        "method": "PUT",
+        "description": "Updates a user",
+        "secure": "Yes"
+      },
+      {
+        "url": "/users/:userId",
+        "method": "DELETE",
+        "description": "Deletes a user",
+        "secure": "Yes"
+      }
+    ],
+    "env": [
+      "NODE_ENV",
+      "PORT",
+      "DB_URL",
+      "JWT_SECRET"
+    ],
+    "models": [
+      "Event"
+    ]
+  }
+}

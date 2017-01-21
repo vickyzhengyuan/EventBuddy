@@ -1,0 +1,49 @@
+{
+  "version": "1.0.0",
+  "main": "index.js",
+  "private": true,
+  "scripts": {
+    "start": "node index.js",
+    "dev": "gulp",
+    "test": "set NODE_ENV=test&& mocha ./server/**/*.test.js",
+    "test:watch": "npm run test -- --watch"
+  },
+  "engines": {
+    "node": "7.0.0"
+  },
+  "dependencies": {
+    "body-parser": "1.15.2",
+    "compression": "1.6.2",
+    "cors": "2.8.1",
+    "debug": "2.2.0",
+    "dotenv": "2.0.0",
+    "express": "4.14.0",
+    "express-jwt": "5.1.0",
+    "express-validation": "1.0.1",
+    "express-winston": "2.0.0",
+    "helmet": "2.3.0",
+    "http-status": "0.2.0",
+    "joi": "9.2.0",
+    "jsonwebtoken": "7.1.9",
+    "method-override": "2.3.5",
+    "winston": "2.2.0",
+    "morgan": "1.7.0",
+    "request": "2.78.0",
+    "request-promise": "4.1.1",
+    "mongoose": "4.6.5",
+    "bluebird": "3.4.6"
+  },
+  "devDependencies": {
+    "chai": "^3.4.1",
+    "gulp": "3.9.1",
+    "gulp-nodemon": "^2.0.6",
+    "gulp-notify": "^2.2.0",
+    "mocha": "3.1.2",
+    "supertest": "2.0.1",
+    "supertest-as-promised": "4.0.1"
+  },
+  "license": "ISC",
+  "name": "sg-uService-event-buddy-web-server",
+  "description": "Microservice description",
+  "author": "Vicky"
+}
