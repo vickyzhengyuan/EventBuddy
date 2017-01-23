@@ -10,6 +10,10 @@ router.get('/health-check', (req, res) =>
   res.send('OK')
 );
 
+router.get('/socketClientTester', (req, res) => {
+    res.sendfile(__dirname+ '/testClient.html')
+})
+
 router.use('/users', userRoutes);
 
 router.use('/events', eventRoutes);

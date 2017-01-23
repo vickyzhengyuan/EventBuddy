@@ -9,11 +9,17 @@ const expressWinston = require('express-winston');
 const expressValidation = require('express-validation');
 const helmet = require('helmet');
 const winstonInstance = require('./winston');
+const app = express();
+const server = require('http').createServer(app);
+var io = require('socket.io')(server);
+var sessions = require('../server/controllers/sessions.controller.js')(io);
+
+
 const routes = require('../server/routes/index.route');
 const config = require('./env');
 const APIError = require('../server/helpers/APIError');
 
-const app = express();
+
 app.use(require('./favicon.js'));
 require('./persistence');
 //===== generator hook =====//
@@ -85,4 +91,11 @@ app.use((err, req, res, next) => // eslint-disable-line no-unused-vars
   })
 );
 
-module.exports = app;
+
+//set up socket.io
+io.on('connection', function(socket) {
+  console.log('SERVER: Detect a user connection with SocketId: ' + socket.id);
+});
+
+
+module.exports = {app, server};

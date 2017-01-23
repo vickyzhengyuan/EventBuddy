@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>
+        Socket Client Test
+    </title>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+
+</head>
+<body>
+<div class="container-fluid">
+    <h3 class="text-center">Test client</h3>
+
+    <div class = "form-group">
+        <label for="eventId"></label>
+        <input class="form-control" type="text" id="eventId">
+        <button class="btn btn-default btn-danger btn-lg" id = "enter">Enter</button>
+    </div>
+
+    <div class = "form-group">
+        <label for="username">Username</label>
+        <input class = "form-control" type="text" id="username">
+        <button class="btn btn-default btn-danger btn-lg" id = "match">Match</button>
+    </div>
+
+    <div class = "form-group">
+        <label for="message">message</label>
+        <input class = "form-control" type="text" id="message">
+        <button class="btn btn-default btn-danger btn-lg" id = "send">Send</button>
+    </div>
+
+</div>
+
+</body>
+</html>
+
+<script type="text/javascript">
+    // open the app, you are connect to the central socket server
+    var socket = io.connect();
+
+    $('#enter').click(function() {
+        if($('#eventId').val() != undefined) {
+            console.log('click:' + $('#eventId').val());
+            var nameSpace = '/events/' + $('#eventId').val();
+            var eventRoom = io(nameSpace);
+            console.log(eventRoom);
+            socket.eventRoom = eventRoom;
+            socket.eventRoom.on('message', function(data) {
+                console.log(data);
+            })
+            socket.eventRoom.eventId = $('#eventId').val();
+        }
+    });
+
+    $('#match').click(function() {
+        if(socket.eventRoom) {
+            console.log('print eventId: ' + socket.eventRoom.eventId);
+            var data = {"eventId": socket.eventRoom.eventId, "socketClientId": socket.eventRoom.id, "username": $('#username').val()};
+            socket.eventRoom.emit('match', data);
+        } else {
+            console.log("Sorry you havent connected to " + $('eventId'));
+        }
+    });
+
+    $('#send').click(function() {
+        if(socket.eventRoom) {
+            var data = {"eventId": socket.eventRoom.eventId, "senderId": socket.eventRoom.id, "message": $('#message').val()};
+            socket.eventRoom.emit('message', data);
+        };
+    });
+
+
+</script>
